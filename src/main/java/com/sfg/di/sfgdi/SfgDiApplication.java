@@ -6,6 +6,8 @@ import com.sfg.di.sfgdi.controllers.MyController;
 import com.sfg.di.sfgdi.controllers.PropertyInjectedController;
 import com.sfg.di.sfgdi.controllers.SetterInjectedController;
 
+import com.sfg.di.sfgdi.services.PrototypeBean;
+import com.sfg.di.sfgdi.services.SingletonBean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -41,6 +43,20 @@ public class SfgDiApplication {
 
 		I18nController i18nController = (I18nController) ctx.getBean("i18nController");
 		System.out.println(i18nController.sayGreeting());
+
+		System.out.println("------------scopes--------------");
+		SingletonBean singletonBean1 = (SingletonBean) ctx.getBean("singletonBean");
+		SingletonBean singletonBean2 = (SingletonBean) ctx.getBean("singletonBean");
+
+		System.out.println(singletonBean1.getMyScope());
+		System.out.println(singletonBean2.getMyScope());
+
+		PrototypeBean prototypeBean1 = (PrototypeBean) ctx.getBean("prototypeBean");
+		PrototypeBean prototypeBean2 = (PrototypeBean) ctx.getBean("prototypeBean");
+
+		System.out.println(prototypeBean1.getScope());
+		System.out.println(prototypeBean2.getScope());
+
 	}
 
 

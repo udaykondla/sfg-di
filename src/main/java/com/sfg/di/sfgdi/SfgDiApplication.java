@@ -1,6 +1,7 @@
 package com.sfg.di.sfgdi;
 
 import com.sfg.di.sfgdi.config.SfgConfiguration;
+import com.sfg.di.sfgdi.config.SfgConstructorConfig;
 import com.sfg.di.sfgdi.controllers.ConstructorInjectedController;
 import com.sfg.di.sfgdi.controllers.I18nController;
 import com.sfg.di.sfgdi.controllers.MyController;
@@ -17,60 +18,64 @@ import org.springframework.context.ApplicationContext;
 @SpringBootApplication
 public class SfgDiApplication {
 
-	public static void main(String[] args) {
-		ApplicationContext ctx = SpringApplication.run(SfgDiApplication.class, args);
+    public static void main(String[] args) {
+        ApplicationContext ctx = SpringApplication.run(SfgDiApplication.class, args);
 
-		MyController myController = (MyController) ctx.getBean("myController");
+        MyController myController = (MyController) ctx.getBean("myController");
 
-		//String a = myController.sayHello();
-		System.out.println("------primary----------");
-		System.out.println(myController.sayHello());
-
-
-		System.out.println("----property-----");
-
-		PropertyInjectedController pctlr = (PropertyInjectedController) ctx.getBean("propertyInjectedController");
-		System.out.println(pctlr.getGreeting());
+        //String a = myController.sayHello();
+        System.out.println("------primary----------");
+        System.out.println(myController.sayHello());
 
 
-		System.out.println("====setter----");
-		SetterInjectedController sctlr = (SetterInjectedController) ctx.getBean("setterInjectedController");
-		System.out.println(sctlr.getGreeting());
+        System.out.println("----property-----");
 
-		System.out.println("---constructor----");
-		ConstructorInjectedController cctlr = (ConstructorInjectedController) ctx.getBean("constructorInjectedController");
-		System.out.println(cctlr.getGreeting());
+        PropertyInjectedController pctlr = (PropertyInjectedController) ctx.getBean("propertyInjectedController");
+        System.out.println(pctlr.getGreeting());
 
 
+        System.out.println("====setter----");
+        SetterInjectedController sctlr = (SetterInjectedController) ctx.getBean("setterInjectedController");
+        System.out.println(sctlr.getGreeting());
 
-		I18nController i18nController = (I18nController) ctx.getBean("i18nController");
-		System.out.println(i18nController.sayGreeting());
+        System.out.println("---constructor----");
+        ConstructorInjectedController cctlr = (ConstructorInjectedController) ctx.getBean("constructorInjectedController");
+        System.out.println(cctlr.getGreeting());
 
-		System.out.println("------------scopes--------------");
-		SingletonBean singletonBean1 = (SingletonBean) ctx.getBean("singletonBean");
-		SingletonBean singletonBean2 = (SingletonBean) ctx.getBean("singletonBean");
 
-		System.out.println(singletonBean1.getMyScope());
-		System.out.println(singletonBean2.getMyScope());
+        I18nController i18nController = (I18nController) ctx.getBean("i18nController");
+        System.out.println(i18nController.sayGreeting());
 
-		PrototypeBean prototypeBean1 = (PrototypeBean) ctx.getBean("prototypeBean");
-		PrototypeBean prototypeBean2 = (PrototypeBean) ctx.getBean("prototypeBean");
+        System.out.println("------------scopes--------------");
+        SingletonBean singletonBean1 = (SingletonBean) ctx.getBean("singletonBean");
+        SingletonBean singletonBean2 = (SingletonBean) ctx.getBean("singletonBean");
 
-		System.out.println(prototypeBean1.getScope());
-		System.out.println(prototypeBean2.getScope());
+        System.out.println(singletonBean1.getMyScope());
+        System.out.println(singletonBean2.getMyScope());
 
-		FakeDataSource fds = (FakeDataSource) ctx.getBean("fakeDataSource");
-		System.out.println(fds.getUsername());
-		System.out.println(fds.getPassword());
-		System.out.println(fds.getJdbcurl());
+        PrototypeBean prototypeBean1 = (PrototypeBean) ctx.getBean("prototypeBean");
+        PrototypeBean prototypeBean2 = (PrototypeBean) ctx.getBean("prototypeBean");
 
-		System.out.println("-----------config props bean------------");
-		SfgConfiguration sfgConfiguration = (SfgConfiguration) ctx.getBean("sfgConfiguration");
-		System.out.println(sfgConfiguration.getUsername());
-		System.out.println(sfgConfiguration.getPassword());
-		System.out.println(sfgConfiguration.getJdbcUrl());
-	}
+        System.out.println(prototypeBean1.getScope());
+        System.out.println(prototypeBean2.getScope());
 
+        FakeDataSource fds = (FakeDataSource) ctx.getBean(FakeDataSource.class);
+        System.out.println(fds.getUsername());
+        System.out.println(fds.getPassword());
+        System.out.println(fds.getJdbcurl());
+
+        System.out.println("-----------config props bean------------");
+        SfgConfiguration sfgConfiguration = ctx.getBean(SfgConfiguration.class);
+        System.out.println(sfgConfiguration.getUsername());
+        System.out.println(sfgConfiguration.getPassword());
+        System.out.println(sfgConfiguration.getJdbcUrl());
+
+        System.out.println("------constructor properties binding---------");
+        SfgConstructorConfig sfgConstructorConfig = ctx.getBean(SfgConstructorConfig.class);
+        System.out.println(sfgConstructorConfig.getUsername());
+        System.out.println(sfgConstructorConfig.getPassword());
+        System.out.println(sfgConstructorConfig.getJdbcurl());
+    }
 
 
 }

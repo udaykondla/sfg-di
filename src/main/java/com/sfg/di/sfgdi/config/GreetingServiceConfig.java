@@ -4,9 +4,13 @@ import com.sfg.di.sfgdi.datasource.FakeDataSource;
 import com.sfg.di.sfgdi.repositories.EnglishGreetingRepository;
 import com.sfg.di.sfgdi.repositories.EnglishGreetingRepositoryImpl;
 import com.sfg.di.sfgdi.services.*;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.*;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 
+@EnableConfigurationProperties(SfgConstructorConfig.class)
 @Configuration
 public class GreetingServiceConfig {
     @Bean

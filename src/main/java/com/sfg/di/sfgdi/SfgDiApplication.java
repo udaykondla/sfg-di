@@ -1,11 +1,13 @@
 package com.sfg.di.sfgdi;
 
+import com.sfg.di.sfgdi.config.SfgConfiguration;
 import com.sfg.di.sfgdi.controllers.ConstructorInjectedController;
 import com.sfg.di.sfgdi.controllers.I18nController;
 import com.sfg.di.sfgdi.controllers.MyController;
 import com.sfg.di.sfgdi.controllers.PropertyInjectedController;
 import com.sfg.di.sfgdi.controllers.SetterInjectedController;
 
+import com.sfg.di.sfgdi.datasource.FakeDataSource;
 import com.sfg.di.sfgdi.services.PrototypeBean;
 import com.sfg.di.sfgdi.services.SingletonBean;
 import org.springframework.boot.SpringApplication;
@@ -57,6 +59,16 @@ public class SfgDiApplication {
 		System.out.println(prototypeBean1.getScope());
 		System.out.println(prototypeBean2.getScope());
 
+		FakeDataSource fds = (FakeDataSource) ctx.getBean("fakeDataSource");
+		System.out.println(fds.getUsername());
+		System.out.println(fds.getPassword());
+		System.out.println(fds.getJdbcurl());
+
+		System.out.println("-----------config props bean------------");
+		SfgConfiguration sfgConfiguration = (SfgConfiguration) ctx.getBean("sfgConfiguration");
+		System.out.println(sfgConfiguration.getUsername());
+		System.out.println(sfgConfiguration.getPassword());
+		System.out.println(sfgConfiguration.getJdbcUrl());
 	}
 
 

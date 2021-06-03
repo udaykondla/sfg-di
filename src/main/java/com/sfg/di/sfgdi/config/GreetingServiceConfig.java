@@ -1,12 +1,11 @@
 package com.sfg.di.sfgdi.config;
 
+import com.sfg.di.sfgdi.datasource.FakeDataSource;
 import com.sfg.di.sfgdi.repositories.EnglishGreetingRepository;
 import com.sfg.di.sfgdi.repositories.EnglishGreetingRepositoryImpl;
 import com.sfg.di.sfgdi.services.*;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
-import org.springframework.context.annotation.Profile;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.*;
 
 @Configuration
 public class GreetingServiceConfig {
@@ -46,5 +45,15 @@ public class GreetingServiceConfig {
     @Bean("i18nService")
     I18nSpanishGreetingService i18nSpanishGreetingService() {
         return new I18nSpanishGreetingService();
+    }
+
+    @Bean
+    FakeDataSource fakeDataSource(SfgConfiguration sfgConfiguration) {
+        FakeDataSource fakeDataSource = new FakeDataSource();
+        fakeDataSource.setUsername(sfgConfiguration.getUsername());
+        fakeDataSource.setPassword(sfgConfiguration.getPassword());
+        fakeDataSource.setJdbcurl(sfgConfiguration.getJdbcUrl());
+
+        return fakeDataSource;
     }
 }
